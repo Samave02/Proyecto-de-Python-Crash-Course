@@ -21,7 +21,7 @@ def run_game():
     ''' creación de la pantalla, con las dimensiones propuestas en size '''
     windth, heigth = 900, 600
     screen = pygame.display.set_mode((windth, heigth))
-
+    dimensiones = screen.get_rect()
     '''Caption -> nombre ventana'''
     pygame.display.set_caption("El ataque de los colibrís salvajes de Adolfo")
     pygame.display.set_icon(imagenIcono)
@@ -53,6 +53,12 @@ def run_game():
     '''cambio de direccion de las navesZancudo'''
     cambioDeDireccion = 1
 
+    #fun.generar_movimiento_naves(flotaDeNaves)
+
+    #fun.actualizar_flota(flotaDeNaves, cambioDeDireccion)
+    #fun.cambio(flotaDeNaves)
+    derecha = True
+    baja = True
     while True:
         fun.check_eventos(naveColibri,screen,lista_semillas)
         naveColibri.update()
@@ -64,8 +70,9 @@ def run_game():
         fun.actualizaciones_pantalla(moving_sprites ,screen ,FPS ,velocidad ,
                                      naveColibri,lista_semillas,naveZancudo,
                                      flotaDeNaves,cambioDeDireccion)
-
-        fun.actualizar_flota(flotaDeNaves,cambioDeDireccion)
-        fun.generar_movimiento_naves(flotaDeNaves)
+        #movimiento vertical
+        fun.cambio(flotaDeNaves,baja)
+        #fun.actualizar_flota(flotaDeNaves,cambioDeDireccion)
+        fun.esta_en_borde(flotaDeNaves,derecha,dimensiones)
 
 run_game()

@@ -103,7 +103,7 @@ def crear_lista_de_naves(screen,flotaDeNaves,numero_columnas,numero_filas):
     naveZancudo.blitme()
     flotaDeNaves.add(naveZancudo)
 
-# ---------------------- Flota de naves -----------------------------#
+# ---------------------- Flota de naves --------------------------------------------------------------------------------
 def crear_flota(screen, flotaDeNaves):
     #de la funcion se obtiene el numero de naves que puede generar
     numero_naves_x = get_numero_de_nave_x(screen)
@@ -112,35 +112,50 @@ def crear_flota(screen, flotaDeNaves):
         for numero_filas in range(0, numero_naves_y, 1):
             # objeto de  referencia
             crear_lista_de_naves(screen, flotaDeNaves,numero_columnas,numero_filas)
-
+#------------------------ Validar la posicion de las naves -------------------------------------------------------------
 def generar_movimiento_naves(flotaDeNaves):
-
+    contador = 0
     for naves in (flotaDeNaves.sprites()):
-        return naves.blitme()
-
-
+        contador += 1
+        if contador < 21:
+            print(naves.x, contador)
 
 #--------------------- validacion de los bordes ------------------------------------------------------------------------
-'''def esta_en_borde(flotaDeNaves):
-    for nave in flotaDeNaves.sprites():
-        #si la nave esta en un borde, se genera verdadero
-        if nave.rect.x >= 900:
-            #si es asi chace un cambio de sentido
-            nave.rect.x = -1
-            cambio(flotaDeNaves)
-        elif nave.rect.x <= 0:
-            nave.rect.x = 1
-            cambio(flotaDeNaves)
-            break'''
+def esta_en_borde(flotaDeNaves, derecha,dimensiones):
 
-'''def cambio(flotaDeNaves):
+    for nave in flotaDeNaves.sprites():
+        if derecha == True:
+            nave.rect.left = nave.rect.left + 5
+            if nave.rect.left > 750 - nave.rect.width:
+                derecha = False
+        else:
+            nave.rect.left = nave.rect.left -5
+            if nave.rect.left < 0:
+                derecha = True
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+def cambio(flotaDeNaves, baja):
     # si la nave esta cambiando de sentido entonces va a desender
     # y sea aplicara un cambio de sentido en x, factorizando un menos
     for nave in flotaDeNaves.sprites():
-        nave.rect.y += 1'''
+        if baja == True:
+            nave.rect.top = nave.rect.top + 2
+            if nave.rect.top > 400 - nave.rect.height:
+                baja = False
+        else:
+            nave.rect.top = nave.rect.top -2
+            if nave.rect.top < 0:
+                baja = True
 
-#-------------------Actualizar flotas --------------------------------
-def actualizar_flota(flotaDeNaves,cambioDeDrireccion):
+
+    for nave in flotaDeNaves.sprites():
+        nave.rect.y = float(nave.rect.y)
+        #nave.rect.x += 5
+        nave.rect.y += 1
+
+#-------------------Actualizar flotas ----------------------------------------------------------------------------------
+'''def actualizar_flota(flotaDeNaves,cambioDeDrireccion):
 
     #esta_en_borde(flotaDeNaves,)
     for nave in flotaDeNaves.sprites():
@@ -151,8 +166,8 @@ def actualizar_flota(flotaDeNaves,cambioDeDrireccion):
             pass
         elif nave.rect.x <= 0:
             cambioDeDrireccion = 1
-        #flotaDeNaves.update(cambioDeDrireccion)
-
+        flotaDeNaves.update(cambioDeDrireccion)'''
+#-----------------------------------------------------------------------------------------------------------------------
 def actualizaciones_pantalla(moving_sprites,screen,FPS,velocidad,
                              naveColibri,lista_semillas, naveZancudo,
                              flotaDeNaves,cambioDeDireccion):
@@ -163,14 +178,10 @@ def actualizaciones_pantalla(moving_sprites,screen,FPS,velocidad,
     lista_semillas.draw(screen)
     flotaDeNaves.draw(screen)
 
-    #flotaDeNaves.update(cambioDeDireccion)
     # metodo que llama la funcion que recorre los fotogramas
     moving_sprites.update()
     # metodo de llama la listos de semillas
     lista_semillas.update()
-
-
-
 
     # velocidad de mov de los fotogramas
     velocidad.tick(FPS)
@@ -178,8 +189,6 @@ def actualizaciones_pantalla(moving_sprites,screen,FPS,velocidad,
     naveColibri.blitme()
     # creacion de la nave alien
     #naveZancudo.blitme()
-
-
 
     # actualiza la pantalla
     pygame.display.update()

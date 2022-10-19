@@ -44,9 +44,9 @@ class NaveZancudo(pygame.sprite.Sprite):
             self.sprite_actual = 0
         self.image = self.sprites[self.sprite_actual]
 
-    def update(self,cambioDeDireccion):
+    def update(self):
         #generar movimiento a la derecha de cada una de las navesZancudo
-        self.rect.x += 1*cambioDeDireccion
+        self.rect.x += 10
 
     def validar_borde(self,cambioDeDrireccion):
         if self.rect.x >= 900:
